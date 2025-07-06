@@ -1,0 +1,16 @@
+version: '3.8'  # Versão do Docker Compose
+
+services:
+  api:
+    build: .  # Constrói a imagem a partir do Dockerfile na raiz do projeto
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload  # Inicia o servidor FastAPI
+    volumes:
+      - .:/app  # Monta o diretório atual no container para hot reload
+    ports:
+      - "8000:8000"  # Mapeia a porta 8000 do container para a máquina host
+    environment:
+      - PYTHONUNBUFFERED=1  # Garante que os logs sejam exibidos em tempo real
+
+    # Não há dependência de banco externo, pois o SQLite é um arquivo local
+
+# Não é necessário definir volumes externos para o banco, pois o arquivo .db ficará no diretório do projeto
